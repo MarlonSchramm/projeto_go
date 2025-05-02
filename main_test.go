@@ -3,9 +3,11 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+
+	//"os"
+	"io"
 	"strconv"
 	"testing"
 
@@ -42,8 +44,15 @@ func TestVerificaStatusCodeDaSaudacaoComParametro(t *testing.T) {
 	resposta := httptest.NewRecorder()
 	r.ServeHTTP(resposta, req)
 	assert.Equal(t, http.StatusOK, resposta.Code, "Deveriam ser iguais")
-	mockDaResposta := `{"API diz":"E ai gui, Tudo beleza?"}`
-	respostaBody, _ := ioutil.ReadAll(resposta.Body)
+	//mockDaResposta := `{"API diz":"E ai gui, Tudo beleza?"}`
+	mockDaResposta := `{"API diz":"oi gui, Tudo beleza?"}`
+	//respostaBody, _ := ioutil.ReadAll(resposta.Body)
+
+	respostaBody, _ := io.ReadAll(resposta.Body)
+
+	//var respostaBody2 bytes.Buffer
+	//respostaBody2, _ := resposta.Body
+
 	assert.Equal(t, mockDaResposta, string(respostaBody))
 }
 
