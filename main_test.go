@@ -27,7 +27,7 @@ func SetupDasRotasDeTeste() *gin.Engine {
 }
 
 func CriaAlunoMock() {
-	aluno := models.Aluno{Nome: "Nome do Aluno Teste:", CPF: "12345678901", RG: "123456789"}
+	aluno := models.Aluno{Nome: "Nome do Aluno Teste", CPF: "12345678901", RG: "123456789"}
 	database.DB.Create(&aluno)
 	ID = int(aluno.ID)
 }
@@ -44,8 +44,9 @@ func TestVerificaStatusCodeDaSaudacaoComParametro(t *testing.T) {
 	resposta := httptest.NewRecorder()
 	r.ServeHTTP(resposta, req)
 	assert.Equal(t, http.StatusOK, resposta.Code, "Deveriam ser iguais")
-	mockDaResposta := `{"API diz":"oi gui, Tudo beleza?"}`
-
+	//mockDaResposta := `{"API diz":"oi gui, Tudo beleza?"}`
+	mockDaResposta := `{"API diz":"E ai gui, Tudo beleza?"}`
+	//"API diz": "E ai " + nome + ", Tudo beleza?",
 	respostaBody, _ := io.ReadAll(resposta.Body)
 
 	assert.Equal(t, mockDaResposta, string(respostaBody))
